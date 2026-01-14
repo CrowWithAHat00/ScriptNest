@@ -1,0 +1,46 @@
+# Vorgehensweise:
+# - Synopsis entsprechend der Skriptfunktion vervollständigen
+# - Alle Kommentare (mit vorangestelltem #) und die hier genannte Vorgehensweise entfernen (Zeile 7 wird zu Zeile 1)
+
+<#
+.SYNOPSIS
+
+  ⠀⠀⠀ ⠀⠀⠀⠀⠀⠀⠀⡀⡄⢠⡀⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+  ⠀⠀ ⠀⠀⠀⠀⡀⣄⣶⣷⣿⣿⣿⣿⣿⣷⣾⣤⣆⣠⣀⠀⠀⠀⠀⠀⠀⠀
+  ⠀ ⠀⠀⠲⠰⡶⠿⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⠠⣦⣄⣀⠀⠀
+  ⠀⠀ ⠀⠀⠀⠈⠁⠘⣿⡿⣏⣷⡄⢐⢈⡻⢿⣿⣿⣿⣿⣿⡇⢻⢿⠛⠟⠐
+  ⠀ ⠀⠀⠀⠀⠀⠀⢰⡮⢋⡁⣰⣶⣿⣭⣿⣿⣿⣿⣿⣿⡿⢧⠈⡀⠀⠀⠀
+   ⠀⠀⣀⡠⠤⢎⣻⠛⣛⣷⣿⣿⣿⣶⣾⣿⠛⠻⣿⣿⣿⣯⢨⠀⢃⠀⠀⠀
+   ⢀⣴⣀⣤⣤⣤⣅⣈⣹⣆⣿⣿⡿⠿⢋⠹⡡⣰⣿⣿⣿⣷⢼⠀⢈⠀⠀⠀
+   ⠖⠉⠉⠛⠛⠿⠿⠿⣿⣿⣿⣿⣿⣧⣤⣄⣮⢪⣿⣿⣿⣿⣿⣢⡤⠀⠀⠀
+  ⠀ ⠀⠀⠀⠀⠀⠐⠾⢿⣿⣿⣿⣿⣿⣿⣿⡿⣿⣿⣿⣿⣿⣿⣿⣆⠀⠀⠀
+   ⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⣿⣿⣿⠛⣿⠣⡱⠽⣿⣿⣿⣿⣿⣿⣿⣇⠀⠀
+   ⠀⠀⠀⠀⠀⠀⠀⠀⣸⢟⠟⠛⡧⡾⣃⠔⠑⢜⣼⣿⣿⣿⣿⣿⣿⣿⣦⡀
+  
+    (C) Crow in the Cloud, 2026.
+
+
+    This script ... <Funktion beschreiben>.                                                             # Ausführliche Beschreibung der Skriptfunktion auf Englisch
+
+
+.PARAMETER <Parameter>
+    <Parameter im Detail beschreiben>
+
+.OUTPUTS
+    <Pfad>\<zur>\<Datei>.<Endung>
+
+.NOTES
+    The executing user must have the following permissions:                                             # Voraussetzungen und Hinweise für die korrekte Ausführung des Skripts nennen
+    - Global Administrator (target tenant)
+    - Must be able to manage Azure resources (setting in Entra ID properties must be set to 'Yes')
+
+    Author:     <Vorname Nachname> (<vorname.nachname>@provectus.de)
+    Date:       <YYYY>-<MM>-<DD>
+    Change Log: v0.1 - <YYYY>-<MM>-<DD> - Initial script creation
+                v1.0 - <YYYY>-<MM>-<DD> - Final release
+
+
+#>
+
+
+# Skript mit 2 Absätzen Abstand zur Synopsis beginnen
