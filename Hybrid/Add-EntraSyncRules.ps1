@@ -34,8 +34,9 @@
 
     Author:     Benjamin Krah (CrowWithAHat@crowinthe.cloud)
     Date:       2025-08-19
-    Change Log: v0.1 - Initial script creation
-                v1.0 - Final release
+    Change Log: v0.1 - 2025-07-01 - Initial script creation
+                v1.0 - 2025-08-19 - Final release
+                V1.1 - 2026-01-20 - Corrected errors in sync attribute list
 
 
 #>
@@ -44,11 +45,11 @@
 Import-Module 'C:\Program Files\Microsoft Azure AD Sync\Bin\ADSync'
 
 # Define array of possible synchronization attributes
-$SyncAttributes = 'info',$Script:SyncAttribute,'extensionAttribute2','extensionAttribute3','extensionAttribute4','extensionAttribute5',`
+$SyncAttributes = 'info','extensionAttribute1','extensionAttribute2','extensionAttribute3','extensionAttribute4','extensionAttribute5',`
 'extensionAttribute6','extensionAttribute7','extensionAttribute8','extensionAttribute9','extensionAttribute10','extensionAttribute11',`
 'extensionAttribute12','extensionAttribute13','extensionAttribute14','extensionAttribute15','customAttribute1','customAttribute2',`
 'customAttribute1','customAttribute3','customAttribute4','customAttribute5','customAttribute6','customAttribute7','customAttribute8',`
-,'customAttribute9','customAttribute10','customAttribute11','customAttribute12','customAttribute13','customAttribute14','customAttribute15'
+'customAttribute9','customAttribute10','customAttribute11','customAttribute12','customAttribute13','customAttribute14','customAttribute15'
 
 # Choose the sync attribute to be used
 $Script:SyncAttribute = $SyncAttributes | Out-GridView -Title 'Please choose the synchronization attribute (MUST EXIST IN ACTIVE DIRECTORY!)' -OutputMode:Single
@@ -612,3 +613,4 @@ CreateGroupFilterRule
 CreateContactFilterRule
 
 CreateComputerFilterRule
+
