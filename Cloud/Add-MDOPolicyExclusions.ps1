@@ -116,3 +116,7 @@ function ConfigureMDOPolicies
    # Disconnect from Exchange Online
    Disconnect-ExchangeOnline -Confirm:$False
    }
+
+# Execute functions
+GetInput
+ConfigureMDOPolicies
