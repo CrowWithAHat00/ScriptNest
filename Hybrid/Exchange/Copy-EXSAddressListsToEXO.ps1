@@ -1,4 +1,54 @@
+<#
+.SYNOPSIS
 
+    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⡄⢠⡀⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+    ⠀⠀⠀⠀⠀⠀⡀⣄⣶⣷⣿⣿⣿⣿⣿⣷⣾⣤⣆⣠⣀⠀⠀⠀⠀⠀⠀⠀
+    ⠀⠀⠀⠲⠰⡶⠿⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⠠⣦⣄⣀⠀⠀
+    ⠀⠀⠀⠀⠀⠈⠁⠘⣿⡿⣏⣷⡄⢐⢈⡻⢿⣿⣿⣿⣿⣿⡇⢻⢿⠛⠟⠐
+    ⠀⠀⠀⠀⠀⠀⠀⢰⡮⢋⡁⣰⣶⣿⣭⣿⣿⣿⣿⣿⣿⡿⢧⠈⡀⠀⠀⠀
+    ⠀⠀⣀⡠⠤⢎⣻⠛⣛⣷⣿⣿⣿⣶⣾⣿⠛⠻⣿⣿⣿⣯⢨⠀⢃⠀⠀⠀
+    ⢀⣴⣀⣤⣤⣤⣅⣈⣹⣆⣿⣿⡿⠿⢋⠹⡡⣰⣿⣿⣿⣷⢼⠀⢈⠀⠀⠀
+    ⠖⠉⠉⠛⠛⠿⠿⠿⣿⣿⣿⣿⣿⣧⣤⣄⣮⢪⣿⣿⣿⣿⣿⣢⡤⠀⠀⠀
+    ⠀⠀⠀⠀⠀⠀⠐⠾⢿⣿⣿⣿⣿⣿⣿⣿⡿⣿⣿⣿⣿⣿⣿⣿⣆⠀⠀⠀
+    ⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⣿⣿⣿⠛⣿⠣⡱⠽⣿⣿⣿⣿⣿⣿⣿⣇⠀⠀
+    ⠀⠀⠀⠀⠀⠀⠀⠀⣸⢟⠟⠛⡧⡾⣃⠔⠑⢜⣼⣿⣿⣿⣿⣿⣿⣿⣦⡀
+
+    (C) Crow in the Cloud.
+
+    This script copies Exchange Server address lists to Exchange Online.
+    Background: 
+    - Exchange Server address lists are not synchronized to Exchange Online. 
+    - Migrated users do not have access to address lists hosted on premises.
+    - Address lists must be created and maintained for Exchange Online independently.
+
+
+.PARAMETER <Parameter>
+    -
+
+.OUTPUTS
+    -
+
+.NOTES
+    The executing user must have the following permissions:
+    - View-Only Organization Management role in Exchange Server
+    - Address Lists permission in Exchange Online - this permission is not enabled by default, a specific role mustr this as follows:
+      - Connect to Exchange Online with Organization Management/Exchange Administrator permissions
+      - New-RoleGroup -Name 'Address Lists Management' -Description 'Members of this group are allowed to manage address lists'
+      - New-ManagementRoleAssignment -Name 'Address Lists Management' -Role 'Address Lists'
+      - Add-RoleGroupMember -Identity 'Address Lists Management' -Member '<YOUR USER>'
+    - Exchange Administrator for creating role groups
+
+    The script is intended to be run on the Entra Connect server.
+    On other servers the PowerShell module will be missing and must be manually copied from the Entra Connect server.
+
+    Author:     Benjamin Krah (CrowWithAHat@crowinthe.cloud)
+    Date:       2025-08-19
+    Change Log: v0.1 - 2025-07-01 - Initial script creation
+                v1.0 - 2025-08-19 - Final release
+                V1.1 - 2026-01-20 - Corrected errors in sync attribute list
+
+
+#>
 function GetInput
    {
    # Ask for input
@@ -78,6 +128,16 @@ function ImportAddressLists
    Write-Host 'Connecting to Exchange Online...' -ForegroundColor Yellow
    Connect-ExchangeOnline -ShowBanner $False
 
+   # Check if needed CMDlet is available
+   if (!(Get-Command Get-Addresslists -ErrorAction SilentlyContinue))
+      {
+      Write-Host ''
+      Write-Host 'ERROR: CMDlets for address lists are not available!' -ForegroundColor DarkYellow
+      Write-Host 'If the role group has just been assigned, please wait a few hours and try again' -ForegroundColor Yellow
+      Write-Host 'If the role group has not been created yet, do this first and then retry the script' -ForegroundColor Yellow
+      Start-Sleep 5
+      }
+      
    # Iterate through each row in imported list
    ForEach ($AddressList in $AddressLists)
       {
