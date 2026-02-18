@@ -52,7 +52,7 @@
 function GetInput
    {
    # Ask for input
-   do {$Script:ScriptMode = Read-Host 'Export lsits, import lists or both? (E/I/B)'}
+   do {$Script:ScriptMode = Read-Host 'Export lists, import lists or both? (E/I/B)'}
    while ($ScriptMode -ne 'E' -AND $CopyChoice -ne 'I')
 
    # If export mode is chosen, ask for further steps
