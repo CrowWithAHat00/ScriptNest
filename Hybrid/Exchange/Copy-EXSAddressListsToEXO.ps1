@@ -126,10 +126,10 @@ function ImportAddressLists
    # Connect to Exchange Online
    Write-Host ''
    Write-Host 'Connecting to Exchange Online...' -ForegroundColor Yellow
-   Connect-ExchangeOnline -ShowBanner $False
+   Connect-ExchangeOnline -ShowBanner $False -Prefix EXO
 
    # Check if needed CMDlet is available
-   if (!(Get-Command Get-Addresslists -ErrorAction SilentlyContinue))
+   if (!(Get-Command Get-EXOAddresslists -ErrorAction SilentlyContinue))
       {
       Write-Host ''
       Write-Host 'ERROR: CMDlets for address lists are not available!' -ForegroundColor DarkYellow
@@ -155,7 +155,7 @@ function ImportAddressLists
       # Create new address list
       Write-Host ''
       Write-Host "Creating address list $($AddressList.Name)..." -ForegroundColor Yellow
-      New-AddressList @ListParams -IncludedRecipients AllRecipients -ErrorAction SilentlyContinue
+      New-EXOAddressList @ListParams -IncludedRecipients AllRecipients -ErrorAction SilentlyContinue
       }
 
     # Disconnect from Exchange Online
