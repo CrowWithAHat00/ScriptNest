@@ -31,7 +31,7 @@
 .NOTES
     The executing user must have the following permissions:
     - View-Only Organization Management role in Exchange Server
-    - Address Lists permission in Exchange Online - this permission is not enabled by default, a specific role mustr this as follows:
+    - Address Lists permission in Exchange Online - this permission is not enabled by default, a specific role must be created for this as follows:
       - Connect to Exchange Online with Organization Management/Exchange Administrator permissions
       - New-RoleGroup -Name 'Address Lists Management' -Description 'Members of this group are allowed to manage address lists'
       - New-ManagementRoleAssignment -Name 'Address Lists Management' -Role 'Address Lists'
