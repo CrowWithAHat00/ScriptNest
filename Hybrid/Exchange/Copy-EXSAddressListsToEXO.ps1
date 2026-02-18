@@ -42,10 +42,10 @@
     On other servers the PowerShell module will be missing and must be manually copied from the Entra Connect server.
 
     Author:     Benjamin Krah (CrowWithAHat@crowinthe.cloud)
-    Date:       2025-08-19
-    Change Log: v0.1 - 2025-07-01 - Initial script creation
-                v1.0 - 2025-08-19 - Final release
-                V1.1 - 2026-01-20 - Corrected errors in sync attribute list
+    Date:       2026-02-16
+    Change Log: v0.1 - 2026-02-16 - Initial script creation
+                v1.0 - 2026-02-16 - Final release
+
 
 
 #>
