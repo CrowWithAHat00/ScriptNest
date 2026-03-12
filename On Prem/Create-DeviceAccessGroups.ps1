@@ -60,7 +60,7 @@ if ($Language -eq 1)
    $Script:LocalAdmGroup = 'Administratoren'
    $Script:RDUsersGroup = 'ROL-SEC-' + $env:COMPUTERNAME + '-RD-Benutzer'
    $Script:RDUsersDesc= 'Mitglieder dieser Gruppe sind berechtigt, sich via RDP auf dem System anzumelden'
-   
+   $Script:LocalRDGroup = 'Remotedesktopbenutzer'
    }
 if ($Language -eq 2)
    {
