@@ -39,55 +39,43 @@
     If the PowerShell script execution policy is set to a restrictive value, the script must be digitally signed.
 
     Author:     Benjamin Krah (CrowWithAHat@crowinthe.cloud)
-    Date:       2026-03-12
+    Date:       2026-03-29
     Change Log: v0.1 - 2026-03-12 - Initial script creation
                 v1.0 - 2026-03-12 - Final release
+                v1.1 - 2026-03-29 - Modified script to make it language-independent
 
 
 #>
 
-# Variables which must be defined manually
-$Script:Language = 1     # Choose language: 1=DE  2=EN
-$Script:ClientOUPath = 'OU=Workstations,OU=Rollen,OU=Gruppen,OU=ADMINISTRATION,'    # Example - modify to your needs
-$Script:ServerOUPath = 'OU=Server,OU=Rollen,OU=Gruppen,OU=ADMINISTRATION,'          # Example - modify to your needs
-
-# Set groups which should be created - modify groups, names and descriptions to your need
-if ($Language -eq 1)
+# This function is used to gather input needed for script execution
+function GetInput
    {
-   # German
-   $Script:AdminsGroup = 'ROL-SEC-' + $env:COMPUTERNAME + '-Admins'
-   $Script:AdminsDesc = 'Mitglieder dieser Gruppe erhalten administrativen Zugriff auf dem genannten System'
-   $Script:LocalAdmGroup = 'Administratoren'
-   $Script:RDUsersGroup = 'ROL-SEC-' + $env:COMPUTERNAME + '-RD-Benutzer'
-   $Script:RDUsersDesc= 'Mitglieder dieser Gruppe sind berechtigt, sich via RDP auf dem System anzumelden'
-   $Script:LocalRDGroup = 'Remotedesktopbenutzer'
-   }
-if ($Language -eq 2)
-   {
-   # English
+   # EXAMPLE VALUES - MODIFY TO YOUR NEEDS
+   $Script:ClientOUPath = 'OU=Workstations,OU=Roles,OU=Groups,OU=ADMINISTRATION,' 
+   $Script:ServerOUPath = 'OU=Server,OU=Roles,OU=Groups,OU=ADMINISTRATION,' 
    $Script:AdminsGroup = 'ROL-SEC-' + $ENV:ComputerName + '-Admins'
    $Script:AdminsDesc = 'Members of this group are assigned administrative permissions for the given system'
    $Script:LocalAdmGroup = 'Administrators'
-   $Script:RDUsersGroup = 'ROL-SEC-' + $env:computername + '-RD-Benutzer'
+   $Script:RDUsersGroup = 'ROL-SEC-' + $ENV:computername + '-RD-Benutzer'
    $Script:RDUsersDesc= 'Members of this group are allowed to login to the given system via RDP'
    $Script:LocalRDGroup = 'Remote Desktop Users'
+
+   # Summarize groups - add groups as needed
+   $GroupNames = $AdminsGroup,$RDUsersGroup
+   $GroupDescriptions = $AdminsDesc,$RDUsersDesc
+   $LocalGroups = $LocalAdmGroup,$LocalRDGroup
+
+   # Build table from variables
+   $Script:AccessGroups = For ($i = 0;$i -lt $GroupNames.Count;$i++)
+      {
+       [PSCustomObject]@{
+        GroupName = $GroupNames[$i]
+        Description = $GroupDescriptions[$i]
+        LocalGroup = $LocalGroups[$i]
+        } 
+      }
    }
-
-# Summarize groups - add groups as needed
-$GroupNames = $AdminsGroup,$RDUsersGroup
-$GroupDescriptions = $AdminsDesc,$RDUsersDesc
-$LocalGroups = $LocalAdmGroup,$LocalRDGroup
-
-# Build table from variables
-$Script:AccessGroups = For ($i = 0;$i -lt $GroupNames.Count;$i++)
-    {
-    [PSCustomObject]@{
-       GroupName = $GroupNames[$i]
-       Description = $GroupDescriptions[$i]
-       LocalGroup = $LocalGroups[$i]
-       }
-    }
-
+   
 ### DO NOT MODIFY ANYTHING BEYOND THIS LINE ###
 
 # Function to dynamically retrieve Active Directory values without AD PowerShell module
@@ -169,6 +157,7 @@ function NestGroups
 #>
 
 # Execute functions
+GetInput
 GetADInfo
 DefineVariables
 CreateGroups
