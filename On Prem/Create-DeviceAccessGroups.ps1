@@ -55,15 +55,15 @@ function GetInput
    $Script:ServerOUPath = 'OU=Server,OU=Roles,OU=Groups,OU=ADMINISTRATION,' 
    $Script:AdminsGroup = 'ROL-SEC-' + $ENV:ComputerName + '-Admins'
    $Script:AdminsDesc = 'Members of this group are assigned administrative permissions for the given system'
-   $Script:LocalAdmGroup = 'Administrators'
+   $Script:LocalAdmGroupSID = 'S-1-5-32-544'
    $Script:RDUsersGroup = 'ROL-SEC-' + $ENV:computername + '-RD-Benutzer'
    $Script:RDUsersDesc= 'Members of this group are allowed to login to the given system via RDP'
-   $Script:LocalRDGroup = 'Remote Desktop Users'
+   $Script:LocalRDGroupSID = 'S-1-5-32-555'
 
    # Summarize groups - add groups as needed
    $GroupNames = $AdminsGroup,$RDUsersGroup
    $GroupDescriptions = $AdminsDesc,$RDUsersDesc
-   $LocalGroups = $LocalAdmGroup,$LocalRDGroup
+   $LocalGroups = $LocalAdmGroupSID,$LocalRDGroupSID
 
    # Build table from variables
    $Script:AccessGroups = For ($i = 0;$i -lt $GroupNames.Count;$i++)
@@ -150,8 +150,8 @@ function NestGroups
       {
       # Add AD groups to local groups if not nested yet
       $AccountName = $Script:DomainNetBios + '\' + $Script:GroupName
-      $LocalGroup = Get-LocalGroupMember $LocalGroup | Where-Object { $_.Objectclass -eq 'Group' } | Select-Object Name -ExpandProperty Name
-      if ($LocalGroup -notcontains $AccountName){Add-LocalGroupMember -Group $LocalGroup -Member $AccountName}
+      $LocalGroupMembers = Get-LocalGroupMember -SID $LocalGroup | Where-Object { $_.Objectclass -eq 'Group' } | Select-Object Name -ExpandProperty Name
+      if ($LocalGroupMembers -notcontains $AccountName){Add-LocalGroupMember -SID $LocalGroup -Member $AccountName}
       }
    }
 #>
