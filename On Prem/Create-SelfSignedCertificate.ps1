@@ -126,8 +126,8 @@ function ConfigureVariables
       }
    
    # Set global parameters
-   if ($Store -eq 'User'){$CertStoreLocation = 'Cert:\CurrentUser\My'}
-   if ($Store -eq 'Computer'){$CertStoreLocation = 'Cert:\LocalMachine\My'}
+   if ($Store -eq 'User'){$Script:CertStoreLocation = 'Cert:\CurrentUser\My'}
+   if ($Store -eq 'Computer'){$Script:CertStoreLocation = 'Cert:\LocalMachine\My'}
    
    # Build parameters list   
    $Script:Params = @{
