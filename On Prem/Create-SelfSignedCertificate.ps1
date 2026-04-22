@@ -202,13 +202,13 @@ function CreateCertificate
       Write-Host "Exporting certificate(s) to $ExportPath..."
       if ($ExportChoice -eq 1 -OR $ExportChoice -eq 3)
          {
-         Export-Certificate -Cert $Cert -FilePath $ExportPath\$Usage.cer
+         Export-Certificate -Cert $Cert -FilePath "$ExportPath\$Usage.cer"
          if (Test-Path "$ExportPath\$Name.cer"){Write-Host 'Public key has successfully been exported!' -ForegroundColor Green}
          else {Write-Host 'Error exporting public key - please check script and export path!' -ForegroundColor Red}
          }
       if ($ExportChoice -eq 2 -OR $ExportChoice -eq 3)
          {
-         Export-PfxCertificate -Cert $Cert -FilePath $ExportPath\$Usage.pfx -Password $SecurePassword
+         Export-PfxCertificate -Cert $Cert -FilePath "$ExportPath\$Usage.pfx" -Password $SecurePassword
          if (Test-Path "$ExportPath\$Name.pfx"){Write-Host 'Private key has successfully been exported!' -ForegroundColor Green}
          else {Write-Host 'Error exporting private key - please check script and export path!' -ForegroundColor Red}
          }
