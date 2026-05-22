@@ -33,6 +33,7 @@
     Date:       2026-03-26
     Change Log: v0.1 - 2026-03-26 - Initial script creation
                 v1.0 - 2026-03-26 - Final release
+                v1.0.1 - 2026-05-22 - Fixed some minor errors (export file names, certificate usage)
 
 
 #>
@@ -142,7 +143,7 @@ function ConfigureVariables
       }
    
    # If certificate should be used for code signing, add text extension
-   if ($Script:Purpose = 'Code Signing'){$Params['TextExtension'] = @("2.5.29.37={text}1.3.6.1.5.5.7.3.3", "2.5.29.19={text}")}
+   if ($Script:Purpose -eq 'Code Signing'){$Params['TextExtension'] = @("2.5.29.37={text}1.3.6.1.5.5.7.3.3", "2.5.29.19={text}")}
    
    # If certificate is exported including private key, generate password and output to screen
    if ($Script:ExportChoice -eq 2 -OR $Script:ExportChoice -eq 3)
@@ -202,13 +203,13 @@ function CreateCertificate
       Write-Host "Exporting certificate(s) to $ExportPath..."
       if ($ExportChoice -eq 1 -OR $ExportChoice -eq 3)
          {
-         Export-Certificate -Cert $Cert -FilePath "$ExportPath\$Usage.cer"
+         Export-Certificate -Cert $Cert -FilePath "$ExportPath\$Name.cer"
          if (Test-Path "$ExportPath\$Name.cer"){Write-Host 'Public key has successfully been exported!' -ForegroundColor Green}
          else {Write-Host 'Error exporting public key - please check script and export path!' -ForegroundColor Red}
          }
       if ($ExportChoice -eq 2 -OR $ExportChoice -eq 3)
          {
-         Export-PfxCertificate -Cert $Cert -FilePath "$ExportPath\$Usage.pfx" -Password $SecurePassword
+         Export-PfxCertificate -Cert $Cert -FilePath "$ExportPath\$Name.pfx" -Password $SecurePassword
          if (Test-Path "$ExportPath\$Name.pfx"){Write-Host 'Private key has successfully been exported!' -ForegroundColor Green}
          else {Write-Host 'Error exporting private key - please check script and export path!' -ForegroundColor Red}
          }
