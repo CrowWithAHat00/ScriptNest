@@ -162,3 +162,7 @@ function CheckAndUpdateCARules
     Write-Output '--------------------------------------------------' -ForegroundColor Cyan
     Write-Output  'Review and update process completed.' -ForegroundColor Cyan
    }
+
+# Execute functions
+CheckModules
+CheckAndUpdateCARules
