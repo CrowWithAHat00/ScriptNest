@@ -46,7 +46,7 @@ $Script:ExecutionMode = 'Interactive'
 
 function CheckModules
    {
-   # Check if needed modules are installed
+   # Check if needed modules are installed and install, if not. This is done only in interactive mode, as automated mode assumes the environment is pre-configured.
    if (!(Get-InstalledModule -Name Microsoft.Graph.Authentication))
       {
       Write-Host 'Module Microsoft.Graph.Authentication is not installed. Installing for current user...' -ForegroundColor Yellow
@@ -164,5 +164,5 @@ function CheckAndUpdateCARules
    }
 
 # Execute functions
-CheckModules
+if ($ExecutionMode -eq 'Interactive'){CheckModules}
 CheckAndUpdateCARules
