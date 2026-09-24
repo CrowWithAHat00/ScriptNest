@@ -71,8 +71,8 @@ function CheckAndUpdateCARules
 
    # Connect to Microsoft Graph
    Write-Output 'Connecting to Microsoft Graph...' -ForegroundColor Yellow
-   if ($ExecutionMode -eq 'Interactive'){Connect-MgGraph -Scopes 'Policy.ReadWrite.ConditionalAccess', 'RoleManagement.Read.Directory'}
-   if ($ExecutionMode -eq 'Automated'){Connect-MgGraph -Identity}
+   if ($ExecutionMode -eq 'Interactive'){Connect-MgGraph -Scopes 'Policy.ReadWrite.ConditionalAccess', 'RoleManagement.Read.Directory' -NoWelcome}
+   if ($ExecutionMode -eq 'Automated'){Connect-MgGraph -Identity -NoWelcome}
 
    # Retrieve all directory roles containing "Administrator" in their name
    Write-Output 'Retrieving all directory roles with "Administrator" in the name...' -ForegroundColor Cyan
